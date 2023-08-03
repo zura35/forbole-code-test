@@ -1,5 +1,5 @@
-//go:generate mockery --name UserStore --output ./mock --outpkg mock --with-expecter
-//go:generate mockery --name RandomUserProvider --output ./mock --outpkg mock --with-expecter
+//go:generate mockery --name UserStore --output ./mock --outpkg mock --case underscore --with-expecter
+//go:generate mockery --name RandomUserProvider --output ./mock --outpkg mock --case underscore --with-expecter
 
 package service
 
