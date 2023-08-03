@@ -41,7 +41,7 @@ CREATE TABLE public.users (
     first_name character varying(255),
     last_name character varying(255),
     dob date,
-    address character varying(255)
+    address jsonb
 );
 
 

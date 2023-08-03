@@ -8,6 +8,8 @@ package sqlc_generated
 import (
 	"context"
 	"database/sql"
+
+	"github.com/sqlc-dev/pqtype"
 )
 
 const createUser = `-- name: CreateUser :one
@@ -26,7 +28,7 @@ type CreateUserParams struct {
 	FirstName sql.NullString
 	LastName  sql.NullString
 	Dob       sql.NullTime
-	Address   sql.NullString
+	Address   pqtype.NullRawMessage
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {

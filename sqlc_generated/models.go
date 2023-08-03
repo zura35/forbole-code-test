@@ -6,6 +6,8 @@ package sqlc_generated
 
 import (
 	"database/sql"
+
+	"github.com/sqlc-dev/pqtype"
 )
 
 type SchemaMigration struct {
@@ -18,5 +20,5 @@ type User struct {
 	FirstName sql.NullString
 	LastName  sql.NullString
 	Dob       sql.NullTime
-	Address   sql.NullString
+	Address   pqtype.NullRawMessage
 }

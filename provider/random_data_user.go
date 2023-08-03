@@ -65,7 +65,18 @@ func (r *RandomDataUser) GetRandomUser(ctx context.Context) (*model.User, error)
 		FirstName: uJSON.FirstName,
 		LastName:  uJSON.LastName,
 		DOB:       dob,
-		// Address:   uJSON.Address,
+		Address: &model.Address{
+			City:          uJSON.Address.City,
+			StreetName:    uJSON.Address.StreetName,
+			StreetAddress: uJSON.Address.StreetAddress,
+			ZipCode:       uJSON.Address.ZipCode,
+			State:         uJSON.Address.State,
+			Country:       uJSON.Address.Country,
+			Coordinates: &model.Coordinates{
+				Latitude:  uJSON.Address.Coordinates.Latitude,
+				Longitude: uJSON.Address.Coordinates.Longitude,
+			},
+		},
 	}, nil
 
 }

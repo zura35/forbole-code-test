@@ -37,7 +37,11 @@ func TestCreateUser(t *testing.T) {
 		FirstName: "John",
 		LastName:  "Doe",
 		DOB:       now,
-		Address:   "123 Main St",
+		Address: &model.Address{
+			StreetName: "123 Main St",
+			City:       "New York",
+			State:      "NY",
+		},
 	})
 
 	dateNow, _ := time.Parse("2006-01-02", now.Format("2006-01-02"))
@@ -46,7 +50,10 @@ func TestCreateUser(t *testing.T) {
 	assert.Equal(t, "John", u.FirstName)
 	assert.Equal(t, "Doe", u.LastName)
 	assert.Equal(t, dateNow.Compare(u.DOB), 0)
-	assert.Equal(t, "123 Main St", u.Address)
+
+	assert.Equal(t, "123 Main St", u.Address.StreetName)
+	assert.Equal(t, "New York", u.Address.City)
+	assert.Equal(t, "NY", u.Address.State)
 }
 
 func newPostgresUserStore(t *testing.T) *repository.PostgresUserStore {
