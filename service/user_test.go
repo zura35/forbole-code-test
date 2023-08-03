@@ -22,7 +22,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func newUserStore(t *testing.T) *service.UserService {
-	mockProvider := &mock.RandomUserProvider{}
+	mockProvider := &mock.UserProvider{}
 	mockStore := &mock.UserStore{}
 
 	mockProvider.EXPECT().GetRandomUser(ctx).Return(&model.User{}, nil)
