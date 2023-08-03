@@ -26,7 +26,7 @@ var (
 	store *repository.PostgresUserStore
 )
 
-func TestCreateUser(t *testing.T) {
+func TestCreateUser__Integration(t *testing.T) {
 	s := newPostgresUserStore(t)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)

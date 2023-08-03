@@ -18,3 +18,5 @@ migrate-fix:
 	migrate -path ./db/migrations -database "postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable" force $(VERSION)
 test:
 	go test -v -cover ./...
+unit-test:
+	go test -v -cover ./... -skip Integration
