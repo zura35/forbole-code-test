@@ -4,7 +4,7 @@ package mock
 
 import (
 	context "context"
-	service "forbole_code_test/service"
+	model "forbole_code_test/model"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -23,19 +23,19 @@ func (_m *RandomUserProvider) EXPECT() *RandomUserProvider_Expecter {
 }
 
 // GetRandomUser provides a mock function with given fields: ctx
-func (_m *RandomUserProvider) GetRandomUser(ctx context.Context) (*service.User, error) {
+func (_m *RandomUserProvider) GetRandomUser(ctx context.Context) (*model.User, error) {
 	ret := _m.Called(ctx)
 
-	var r0 *service.User
+	var r0 *model.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context) (*service.User, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context) (*model.User, error)); ok {
 		return rf(ctx)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context) *service.User); ok {
+	if rf, ok := ret.Get(0).(func(context.Context) *model.User); ok {
 		r0 = rf(ctx)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*service.User)
+			r0 = ret.Get(0).(*model.User)
 		}
 	}
 
@@ -66,12 +66,12 @@ func (_c *RandomUserProvider_GetRandomUser_Call) Run(run func(ctx context.Contex
 	return _c
 }
 
-func (_c *RandomUserProvider_GetRandomUser_Call) Return(_a0 *service.User, _a1 error) *RandomUserProvider_GetRandomUser_Call {
+func (_c *RandomUserProvider_GetRandomUser_Call) Return(_a0 *model.User, _a1 error) *RandomUserProvider_GetRandomUser_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *RandomUserProvider_GetRandomUser_Call) RunAndReturn(run func(context.Context) (*service.User, error)) *RandomUserProvider_GetRandomUser_Call {
+func (_c *RandomUserProvider_GetRandomUser_Call) RunAndReturn(run func(context.Context) (*model.User, error)) *RandomUserProvider_GetRandomUser_Call {
 	_c.Call.Return(run)
 	return _c
 }

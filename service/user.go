@@ -3,30 +3,34 @@
 
 package service
 
-import "context"
+import (
+	"context"
+	"forbole_code_test/model"
+)
 
 type UserStore interface {
-	CreateUser(ctx context.Context, user *User) error
+	CreateUser(ctx context.Context, user *model.User) (*model.User, error)
 }
 
 type RandomUserProvider interface {
-	GetRandomUser(ctx context.Context) (*User, error)
+	GetRandomUser(ctx context.Context) (*model.User, error)
 }
 
-type User struct {
+type UserService struct {
 	store    UserStore
 	provider RandomUserProvider
 }
 
-func NewUser(store UserStore, provider RandomUserProvider) *User {
-	return &User{store: store, provider: provider}
+func NewUserService(store UserStore, provider RandomUserProvider) *UserService {
+	return &UserService{store: store, provider: provider}
 }
 
-func (u *User) FetchAndCreateUser(ctx context.Context) error {
+func (u *UserService) FetchAndCreateUser(ctx context.Context) error {
 	ru, err := u.provider.GetRandomUser(ctx)
 	if err != nil {
 		return err
 	}
 
-	return u.store.CreateUser(ctx, ru)
+	_, err = u.store.CreateUser(ctx, ru)
+	return err
 }

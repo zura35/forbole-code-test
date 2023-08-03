@@ -2,6 +2,7 @@ package service_test
 
 import (
 	"context"
+	"forbole_code_test/model"
 	"forbole_code_test/service"
 	"forbole_code_test/service/mock"
 	"testing"
@@ -20,12 +21,12 @@ func TestCreateUser(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func newUserStore(t *testing.T) *service.User {
+func newUserStore(t *testing.T) *service.UserService {
 	mockProvider := &mock.RandomUserProvider{}
 	mockStore := &mock.UserStore{}
 
-	mockProvider.EXPECT().GetRandomUser(ctx).Return(&service.User{}, nil)
-	mockStore.EXPECT().CreateUser(ctx, &service.User{}).Return(nil)
+	mockProvider.EXPECT().GetRandomUser(ctx).Return(&model.User{}, nil)
+	mockStore.EXPECT().CreateUser(ctx, &model.User{}).Return(&model.User{}, nil)
 
-	return service.NewUser(mockStore, mockProvider)
+	return service.NewUserService(mockStore, mockProvider)
 }
