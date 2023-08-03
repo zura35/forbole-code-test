@@ -11,14 +11,24 @@ import (
 	"time"
 
 	"forbole_code_test/provider"
+	"forbole_code_test/provider/source"
 	"forbole_code_test/repository"
 	"forbole_code_test/service"
 
 	_ "github.com/lib/pq"
 )
 
+var (
+	dbHost     = os.Getenv("DB_HOST")
+	dbPort     = os.Getenv("DB_PORT")
+	dbUser     = os.Getenv("DB_USER")
+	dbPassword = os.Getenv("DB_PASSWORD")
+	dbName     = os.Getenv("DB_NAME")
+)
+
 func main() {
-	dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		dbHost, dbPort, dbUser, dbPassword, dbName)
 	db, err := sql.Open("postgres", dsn)
 	defer db.Close()
 
@@ -27,7 +37,7 @@ func main() {
 	}
 
 	userStore := repository.NewPostgresUserStore(db)
-	userProvider := provider.NewRandomDataUser()
+	userProvider := provider.NewUserProvider(source.NewRandomDataAPIUser())
 	userService := service.NewUserService(userStore, userProvider)
 
 	done := make(chan os.Signal, 1)
@@ -45,8 +55,14 @@ func main() {
 			time.Sleep(interval)
 
 			ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-			defer cancel()
-			go userService.FetchAndCreateUser(ctx)
+			go func() {
+				defer cancel()
+
+				err := userService.FetchAndCreateUser(ctx)
+				if err != nil {
+					fmt.Printf("error: %v\n", err)
+				}
+			}()
 		}
 	}
 }
