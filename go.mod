@@ -3,7 +3,7 @@ module forbole_code_test
 go 1.20
 
 require (
-	github.com/golang/mock v1.6.0
+	github.com/lib/pq v1.10.9
 	github.com/stretchr/testify v1.8.4
 )
 
