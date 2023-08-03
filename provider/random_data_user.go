@@ -11,9 +11,15 @@ type UserProvider struct {
 	dsu DataSourceUser
 }
 
+// DataSourceUser defines the source of data and the data transformation methods
 type DataSourceUser interface {
+	// Source returns the data source URL
 	Source() string
+
+	// FromJSON transforms JSON response to a corresponding struct
 	FromJSON(data []byte) error
+
+	// ToUserModel transforms the struct to the User model
 	ToUserModel() (*model.User, error)
 }
 
