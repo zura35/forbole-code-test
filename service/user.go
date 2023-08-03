@@ -3,12 +3,14 @@
 
 package service
 
+import "context"
+
 type UserStore interface {
-	CreateUser(user *User) error
+	CreateUser(ctx context.Context, user *User) error
 }
 
 type RandomUserProvider interface {
-	GetRandomUser() (*User, error)
+	GetRandomUser(ctx context.Context) (*User, error)
 }
 
 type User struct {
@@ -20,11 +22,11 @@ func NewUser(store UserStore, provider RandomUserProvider) *User {
 	return &User{store: store, provider: provider}
 }
 
-func (u *User) FetchAndCreateUser() error {
-	ru, err := u.provider.GetRandomUser()
+func (u *User) FetchAndCreateUser(ctx context.Context) error {
+	ru, err := u.provider.GetRandomUser(ctx)
 	if err != nil {
 		return err
 	}
 
-	return u.store.CreateUser(ru)
+	return u.store.CreateUser(ctx, ru)
 }

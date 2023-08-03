@@ -3,6 +3,7 @@
 package mock
 
 import (
+	context "context"
 	service "forbole_code_test/service"
 
 	mock "github.com/stretchr/testify/mock"
@@ -21,25 +22,25 @@ func (_m *RandomUserProvider) EXPECT() *RandomUserProvider_Expecter {
 	return &RandomUserProvider_Expecter{mock: &_m.Mock}
 }
 
-// GetRandomUser provides a mock function with given fields:
-func (_m *RandomUserProvider) GetRandomUser() (*service.User, error) {
-	ret := _m.Called()
+// GetRandomUser provides a mock function with given fields: ctx
+func (_m *RandomUserProvider) GetRandomUser(ctx context.Context) (*service.User, error) {
+	ret := _m.Called(ctx)
 
 	var r0 *service.User
 	var r1 error
-	if rf, ok := ret.Get(0).(func() (*service.User, error)); ok {
-		return rf()
+	if rf, ok := ret.Get(0).(func(context.Context) (*service.User, error)); ok {
+		return rf(ctx)
 	}
-	if rf, ok := ret.Get(0).(func() *service.User); ok {
-		r0 = rf()
+	if rf, ok := ret.Get(0).(func(context.Context) *service.User); ok {
+		r0 = rf(ctx)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*service.User)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func() error); ok {
-		r1 = rf()
+	if rf, ok := ret.Get(1).(func(context.Context) error); ok {
+		r1 = rf(ctx)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -53,13 +54,14 @@ type RandomUserProvider_GetRandomUser_Call struct {
 }
 
 // GetRandomUser is a helper method to define mock.On call
-func (_e *RandomUserProvider_Expecter) GetRandomUser() *RandomUserProvider_GetRandomUser_Call {
-	return &RandomUserProvider_GetRandomUser_Call{Call: _e.mock.On("GetRandomUser")}
+//   - ctx context.Context
+func (_e *RandomUserProvider_Expecter) GetRandomUser(ctx interface{}) *RandomUserProvider_GetRandomUser_Call {
+	return &RandomUserProvider_GetRandomUser_Call{Call: _e.mock.On("GetRandomUser", ctx)}
 }
 
-func (_c *RandomUserProvider_GetRandomUser_Call) Run(run func()) *RandomUserProvider_GetRandomUser_Call {
+func (_c *RandomUserProvider_GetRandomUser_Call) Run(run func(ctx context.Context)) *RandomUserProvider_GetRandomUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run()
+		run(args[0].(context.Context))
 	})
 	return _c
 }
@@ -69,7 +71,7 @@ func (_c *RandomUserProvider_GetRandomUser_Call) Return(_a0 *service.User, _a1 e
 	return _c
 }
 
-func (_c *RandomUserProvider_GetRandomUser_Call) RunAndReturn(run func() (*service.User, error)) *RandomUserProvider_GetRandomUser_Call {
+func (_c *RandomUserProvider_GetRandomUser_Call) RunAndReturn(run func(context.Context) (*service.User, error)) *RandomUserProvider_GetRandomUser_Call {
 	_c.Call.Return(run)
 	return _c
 }

@@ -3,6 +3,7 @@
 package mock
 
 import (
+	context "context"
 	service "forbole_code_test/service"
 
 	mock "github.com/stretchr/testify/mock"
@@ -21,13 +22,13 @@ func (_m *UserStore) EXPECT() *UserStore_Expecter {
 	return &UserStore_Expecter{mock: &_m.Mock}
 }
 
-// CreateUser provides a mock function with given fields: user
-func (_m *UserStore) CreateUser(user *service.User) error {
-	ret := _m.Called(user)
+// CreateUser provides a mock function with given fields: ctx, user
+func (_m *UserStore) CreateUser(ctx context.Context, user *service.User) error {
+	ret := _m.Called(ctx, user)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(*service.User) error); ok {
-		r0 = rf(user)
+	if rf, ok := ret.Get(0).(func(context.Context, *service.User) error); ok {
+		r0 = rf(ctx, user)
 	} else {
 		r0 = ret.Error(0)
 	}
@@ -41,14 +42,15 @@ type UserStore_CreateUser_Call struct {
 }
 
 // CreateUser is a helper method to define mock.On call
+//   - ctx context.Context
 //   - user *service.User
-func (_e *UserStore_Expecter) CreateUser(user interface{}) *UserStore_CreateUser_Call {
-	return &UserStore_CreateUser_Call{Call: _e.mock.On("CreateUser", user)}
+func (_e *UserStore_Expecter) CreateUser(ctx interface{}, user interface{}) *UserStore_CreateUser_Call {
+	return &UserStore_CreateUser_Call{Call: _e.mock.On("CreateUser", ctx, user)}
 }
 
-func (_c *UserStore_CreateUser_Call) Run(run func(user *service.User)) *UserStore_CreateUser_Call {
+func (_c *UserStore_CreateUser_Call) Run(run func(ctx context.Context, user *service.User)) *UserStore_CreateUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*service.User))
+		run(args[0].(context.Context), args[1].(*service.User))
 	})
 	return _c
 }
@@ -58,7 +60,7 @@ func (_c *UserStore_CreateUser_Call) Return(_a0 error) *UserStore_CreateUser_Cal
 	return _c
 }
 
-func (_c *UserStore_CreateUser_Call) RunAndReturn(run func(*service.User) error) *UserStore_CreateUser_Call {
+func (_c *UserStore_CreateUser_Call) RunAndReturn(run func(context.Context, *service.User) error) *UserStore_CreateUser_Call {
 	_c.Call.Return(run)
 	return _c
 }
