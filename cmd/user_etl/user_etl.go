@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"forbole_code_test/provider"
+	"forbole_code_test/provider/source"
 	"forbole_code_test/repository"
 	"forbole_code_test/service"
 
@@ -27,7 +28,7 @@ func main() {
 	}
 
 	userStore := repository.NewPostgresUserStore(db)
-	userProvider := provider.NewRandomDataUser()
+	userProvider := provider.NewUserProvider(source.NewRandomDataAPIUser())
 	userService := service.NewUserService(userStore, userProvider)
 
 	done := make(chan os.Signal, 1)

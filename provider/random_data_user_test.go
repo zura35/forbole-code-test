@@ -3,6 +3,7 @@ package provider_test
 import (
 	"context"
 	"forbole_code_test/provider"
+	"forbole_code_test/provider/source"
 	"testing"
 	"time"
 
@@ -13,7 +14,7 @@ func TestGetRandomUser__Integration(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	userProvider := provider.NewRandomDataUser()
+	userProvider := provider.NewUserProvider(source.NewRandomDataAPIUser())
 	user, err := userProvider.GetRandomUser(ctx)
 	assert.NoError(t, err)
 
